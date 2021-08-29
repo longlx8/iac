@@ -1,8 +1,8 @@
 # khai báo provider, xác thực
 provider "aws" {
-  access_key = "***"
-  secret_key = "***"
-  region     = "ap-southeast-1" # Singapore region
+  // access_key = "***"
+  // secret_key = "***"
+  region = "ap-southeast-1" # Singapore region
 }
 
 # taọ alb load balancer
@@ -22,6 +22,16 @@ resource "aws_lb_target_group" "web" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
+
+  health_check {
+    protocol            = "HTTP"
+    path                = "/"
+    port                = 80
+    healthy_threshold   = 2
+    interval            = 5
+    unhealthy_threshold = 2
+    timeout             = 3
+  }
 }
 
 # thêm ec2 instance vào web target group
