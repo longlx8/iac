@@ -1,3 +1,5 @@
+# khai báo các biến truyền vào s3 module để tạo bucket
+
 variable "bucket_name" {
   description = "Name of the s3 bucket. Must be unique."
   type        = string
