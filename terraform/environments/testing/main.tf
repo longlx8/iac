@@ -5,7 +5,7 @@ provider "aws" {
 
 # gọi module s3 từ đường dẫn local và truyền các giá trị vào
 module "s3_bucket" {
-  source = "../terraform/modules/s3"
+  source = "../../modules/s3"
 
   bucket_name = "devops-techmaster-03-testing-bucket"
   bucket_acl  = "authenticated-read"
