@@ -32,7 +32,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 *ssh/
-*backend.tf
 
 # Ansible
 *.retry
