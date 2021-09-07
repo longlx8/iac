@@ -5,14 +5,14 @@ module "db" {
   source  = "terraform-aws-modules/rds/aws"
   version = "~> 3.0"
 
-  identifier = "devops-03-mysql"
+  identifier = "devops-03-mysql-production"
 
   engine            = "mysql"
   engine_version    = "5.7.19"
   instance_class    = "db.t2.micro"
   allocated_storage = 5
 
-  name     = "devops-03"
+  name     = "devops03"
   username = "dev"
   password = "YourPwdShouldBeLongAndSecure!"
   port     = "3306"
