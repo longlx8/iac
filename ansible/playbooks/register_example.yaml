@@ -1,0 +1,11 @@
+---
+- name: check hostname
+  hosts: web
+  tasks:
+    - name: check hostname
+      command: hostname
+      register: result    #lưu kết quả chạy lệnh hostname ra 1 biến result
+    
+    - debug:
+        #var: result   #in biến result ra màn hình terminal
+        msg: Hello variable {{ result.stdout }}

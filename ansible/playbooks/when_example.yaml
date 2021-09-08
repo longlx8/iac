@@ -1,0 +1,19 @@
+---
+- name: check demo.sql file
+  hosts: web
+  tasks:
+    - name: check if file demo.sql exist
+      ignore_errors: yes
+      command: ls /tmp/demo.sql
+      register: result
+    
+    - name: debug demo
+      debug:
+        var: result
+    
+    - name: create file /tmp/demo.sql if not exist
+      file: 
+        path: /tmp/demo.sql
+        state: touch
+        mode: '0644'
+      when: result.stderr != ""

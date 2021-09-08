@@ -1,0 +1,81 @@
+---
+- name: nodejs todo list task
+  hosts: web
+  tasks:
+    - name: check if git installed
+      ignore_errors: yes
+      command: which git
+      register: check_git_result
+    
+    - name: debug git command existed
+      debug:
+        var: check_git_result
+    
+    - name: install git if not existed
+      apt: 
+        name: git
+        state: latest
+      when: check_git_result.stderr != ""
+
+    - name: clone nodejs repository
+      git:
+        repo: https://github.com/handuy/nodejs-todolist
+        dest: ~/mycode/nodejs-todolist
+
+    - name: install docker
+      apt:
+        name: docker.io
+        state: latest
+      become: yes
+      become_user: root
+
+    - name: add ubuntu user to docker group
+      become: yes
+      become_user: root
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+    
+    - name: start docker service
+      service:
+        name: docker
+        state: started
+    
+    - name: reset ssh connection to allow ubuntu user in docker group
+      meta: reset_connection
+
+    - name: build image
+      command: docker build -t todo-list:v0.0.1 .
+      args:
+        chdir: ~/mycode/nodejs-todolist/
+
+    - name: install docker-compose
+      become: yes
+      become_user: root
+      remote_user: ubuntu
+      get_url: 
+        url : https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x,o+x'
+
+    - name: copy docker-compose files
+      copy:
+        src: "{{ item }}"
+        dest: ~/mycode/nodejs-todolist/
+      with_items:
+        - "{{ playbook_dir }}/../files/docker-compose.yaml"
+        - "{{ playbook_dir }}/../files/init-db.sql"
+      tags: docker-compose-copy-files
+
+    - name: docker-compose up services
+      command: docker-compose up -d
+      args:
+        chdir: ~/mycode/nodejs-todolist/
+      tags: docker-compose-up
+    
+    # - name: docker-compose down services
+    #   command: docker-compose down
+    #   args:
+    #     chdir: ~/mycode/nodejs-todolist/
+    #   tags: docker-compose-down

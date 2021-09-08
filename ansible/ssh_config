@@ -1,0 +1,9 @@
+Host web*
+  User devops
+  IdentityFile ~/iac/ssh/dev01
+
+Host web01
+  HostName 192.168.3.11
+
+Host web02
+  HostName 192.168.3.12
