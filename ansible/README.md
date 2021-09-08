@@ -8,18 +8,18 @@ install ansible: https://www.guru99.com/ansible-tutorial.html#6
 ansible -i hosts web -m raw -a "sudo apt-get -y update && sudo apt-get install -y python"
 ansible -i hosts web -m ping
 
-ansible -i hosts web -m copy -a "src=./hosts dest=/tmp/testfile"
+ansible web -m copy -a "src=./hosts dest=/tmp/testfile"
 
-ansible -i hosts web -m apt -a "name=python3.7 state=present" -b
-ansible -i hosts web -m apt -a "name=git state=latest" -b
+ansible web -m apt -a "name=python3.7 state=present" -b
+ansible web -m apt -a "name=git state=latest" -b
 
 # install nginx
-ansible -i hosts web -m apt -a "name=nginx state=present" -b
-ansible -i hosts web -m service -a "name=nginx status=started" -b
+ansible web -m apt -a "name=nginx state=present" -b
+ansible web -m service -a "name=nginx status=started" -b
 
 # install nodejs
-ansible -i hosts web -m apt -a "name=nodejs state=present" -b
-ansible -i hosts web -m apt -a "name=npm state=present" -b
+ansible web -m apt -a "name=nodejs state=present" -b
+ansible web -m apt -a "name=npm state=present" -b
 ```
 
 ### ansible-playbook with --tags

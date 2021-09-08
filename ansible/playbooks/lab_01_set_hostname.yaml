@@ -1,0 +1,9 @@
+---
+- name: set hostname for servers
+  hosts: web
+  become: yes
+  become_user: root
+  tasks:
+  - name: "set hostnames"
+    hostname:
+      name: "{{ new_hostname }}"

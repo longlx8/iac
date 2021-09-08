@@ -1,0 +1,4 @@
+# biến cho host web01
+
+new_hostname: "web01"
+web_server_name: "Server Web 01"

@@ -1,0 +1,7 @@
+---
+- name: Install docker using role
+  become: yes
+  become_user: root
+  hosts: web
+  roles:
+    - install-docker

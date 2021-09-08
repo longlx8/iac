@@ -12,8 +12,3 @@
     service:
       name: nginx
       state: started
-
-- hosts: web
-  become: true
-  roles:
-    - {role: install-docker, tags: ['docker']}

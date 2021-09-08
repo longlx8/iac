@@ -1,0 +1,13 @@
+---
+- name: Template example
+  become: yes
+  become_user: root
+  hosts: web
+  tasks:
+  - name: Copy nginx index.html template file
+    template:
+      src: ../templates/nginx/index.html.j2
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: '0644'
