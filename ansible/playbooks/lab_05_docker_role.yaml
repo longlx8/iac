@@ -4,4 +4,4 @@
   become_user: root
   hosts: web
   roles:
-    - install-docker
+    - nickjj.docker
